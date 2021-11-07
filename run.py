@@ -141,5 +141,30 @@ def main():
     update_worksheet(stock_data, 'stock')
 
 print()
-print('Welcome to my love sandwiches automation\n')
-main()
+
+print("Welcome to Love Sandwiches data automation.\n")
+stock_data = main()
+
+# Write you code below this comment
+
+def get_stock_values(data):
+    """
+    Function to display how many sandwiches to make for next market, determined by 
+    stock_data values in stock worksheet
+    """
+    print('Make the following numbers of sandwiches for next market:\n')
+
+    headings = SHEET.worksheet('stock').get_all_values()
+    headings_names= headings[0]
+    
+    stock_values = SHEET.worksheet('stock').get_all_values()
+    stock_row = stock_values[-1]
+    
+    remaining_stock = {}
+    for heading, stock_value in zip(headings_names, stock_row):
+        remaining_stock[heading] =  stock_value
+    
+    return remaining_stock 
+    
+stock_values = get_stock_values(stock_data)
+print(stock_values)
